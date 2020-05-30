@@ -5,6 +5,7 @@ const sourcemaps = require("gulp-sourcemaps");
 const sass = require("gulp-sass");
 const gulpIf = require("gulp-if");
 const cleanCSS = require("gulp-clean-css");
+const autoprefixer = require("gulp-autoprefixer");
 
 const {
   srcStylesDir,
@@ -24,6 +25,7 @@ function buildStyles() {
         outputStyle: isProd ? "compressed" : "expanded",
       }).on("error", sass.logError)
     )
+    .pipe(autoprefixer())
     .pipe(gulpIf(!isProd, sourcemaps.write()))
     .pipe(gulpIf(isProd, cleanCSS()))
     .pipe(gulp.dest(buildStylesDir));
