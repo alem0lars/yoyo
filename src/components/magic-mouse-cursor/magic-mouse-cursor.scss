@@ -1,47 +1,68 @@
-#magicMouseCursor {
+@import "../common/bootstrap-variables";
+
+html,
+html * {
+  cursor: none !important;
+}
+
+#magic-mouse-outer-cursor {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 35px;
   height: 35px;
-  border: 1px solid #fff;
-  border-radius: 50%;
   z-index: 9999;
-  left: 0;
-  top: 0;
-  transition: transform 0.07s, width 0.3s, height 0.3s;
-  pointer-events: none;
-  &.cursor-square {
-    border-radius: 0;
-  }
-}
-#magicPointer {
-  height: 5px;
-  width: 5px;
-  top: 0;
-  left: 0;
-  position: fixed;
-  background: #fff;
+
+  border: 1px solid $light;
   border-radius: 50%;
+
+  transition: transform 0.07s, width 0.3s, height 0.3s;
+
   pointer-events: none;
-  transition: background 0.2s, width 0.2s, height 0.2s, box-shadow 0.2s;
+
   &.is-hover {
-    background: red;
+    border-color: $primary;
   }
-  &.pointer-blur {
-    height: 50px;
-    width: 50px;
+
+  &.cursor-square {
+    border-radius: 5%;
+  }
+
+  &.cursor-disabled {
+    border: 0px;
+  }
+
+  // Blur
+  box-shadow: 0px 0px 15px -5px $black;
+}
+
+#magic-mouse-inner-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+
+  background: $light;
+  border-radius: 30%;
+
+  transition: background 0.2s, width 0.2s, height 0.2s, box-shadow 0.2s;
+
+  pointer-events: none;
+
+  &.is-hover {
+    background: $primary;
+  }
+
+  &.cursor-disabled {
     background: none;
-    border: 1px solid #fff;
-    box-shadow: 0px 0px 15px -5px rgba(255, 255, 255, 1);
-  }
-  &.pointer-overlay {
-    height: 50px;
-    width: 50px;
-    mix-blend-mode: difference;
-    box-shadow: 0px 0px 15px -5px rgba(255, 255, 255, 1);
+    border-radius: unset;
   }
 }
+
 .magic-hover {
   transition: all 0.2s;
+
   &:hover {
     cursor: none;
   }
