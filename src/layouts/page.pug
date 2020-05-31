@@ -8,7 +8,9 @@ html(lang=locals.website.lang)
 
     meta(charset="utf-8")
     meta(name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1")
-    meta(name="theme-color" content=locals.colorscheme.theme.defaultBackground)
+
+    //- Set theme color to the default background color
+    meta(name="theme-color" content=locals.colorscheme.defaultBackground)
 
     //- Include javascripts
     script(type="text/javascript" src="scripts/init.js")
@@ -22,5 +24,8 @@ html(lang=locals.website.lang)
     block styles
 
   body
+    .circle-cursor-outer
+    .circle-cursor-inner
+
     block content
     block scripts-body

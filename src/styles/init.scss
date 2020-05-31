@@ -1,1 +1,8 @@
+// Import Twitter Bootstrap library
+@import "bootstrap-variables.scss";
 @import "~bootstrap/scss/bootstrap";
+
+// Import Locomotive Scroll library
+@import "~locomotive-scroll/src/locomotive-scroll";
+
+@import "../components/mouse-cursor/mouse-cursor";
