@@ -1,5 +1,8 @@
-# Dependencies.
+# Dependencies
 /node_modules/
 
-# Production site.
-/build/
+# Built version
+/dist/
+
+# Cache
+/.cache/

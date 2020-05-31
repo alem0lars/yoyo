@@ -10,6 +10,12 @@ html(lang=locals.website.lang)
     meta(name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1")
     meta(name="theme-color" content=locals.colorscheme.theme.defaultBackground)
 
+    //- Include javascripts
+    script(type="text/javascript" src="scripts/init.js")
+    //- Include stylesheets
+    link(rel="stylesheet" href="styles/init.scss")
+    //- Include fonts
+    link(rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.css")
     link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap")
 
     block scripts-head

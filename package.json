@@ -7,24 +7,25 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "clean": "npx gulp clean",
-    "build": "npx gulp build",
-    "watch": "npx gulp watch"
+    "clean": "npx rimraf ./dist",
+    "format": "npx prettier --write ./src",
+    "build": "npx parcel build src/*.{pug,txt}",
+    "watch": "npx parcel watch src/*.{pug,txt}",
+    "serve": "npx parcel serve src/*.{pug,txt}",
+    "rebuild": "npm run clean; npm run build"
   },
   "devDependencies": {
-    "browser-sync": "^2.26.7",
     "favicons": "^6.1.0",
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
-    "gulp-clean": "^0.4.0",
-    "gulp-clean-css": "^4.3.0",
-    "gulp-data": "^1.3.1",
-    "gulp-if": "^3.0.0",
-    "gulp-pug": "^4.0.1",
-    "gulp-sass": "^4.1.0",
-    "gulp-sourcemaps": "^2.6.5",
-    "jsdom": "^16.2.2",
-    "node-sass": "^4.14.1",
-    "through2": "^3.0.1"
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^2.0.5",
+    "pug": "^3.0.0",
+    "rimraf": "^3.0.2",
+    "sass": "^1.26.7"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
+    "bootstrap": "^4.5.0",
+    "jquery": "^3.5.1",
+    "popper.js": "^1.16.1"
   }
 }
