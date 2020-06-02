@@ -1,20 +1,21 @@
 import $ from "jquery";
 
+const defaultOuterCursorSize = 30;
+const validOuterCursorHovers = ["disable", "square"];
+const validInnerCursorHovers = ["disable", "highlight"];
+
 class MagicMouseCursor {
   constructor(options = {}) {
-    this.defaultOuterWidth = options.defaultOuterWidth || 30;
-    this.defaultOuterHeight = options.defaultOuterHeight || 30;
+    this.defaultOuterCursorWidth =
+      options.defaultOuterWidth || defaultOuterCursorSize;
+    this.defaultOuterCursorHeight =
+      options.defaultOuterCursorHeight || defaultOuterCursorSize;
 
-    this.hoverSelector = options.hoverSelector || ".magic-mouse-cursor-hover";
-    this.selectorForHoverOuterCursorSquared =
-      options.selectorForHoverOuterCursorSquared;
-    this.selectorForHoverOuterCursorDisabled =
-      options.selectorForHoverOuterCursorDisabled;
-    this.selectorForHoverInnerCursorDisabled =
-      options.selectorForHoverInnerCursorDisabled;
+    this._initHover(options.hover || {});
 
-    this.outerWidth = this.defaultOuterWidth;
-    this.outerHeight = this.defaultOuterHeight;
+    // Track the outer cursor width and height
+    this.outerCursorWidth = this.defaultOuterCursorWidth;
+    this.outerCursorHeight = this.defaultOuterCursorHeight;
 
     // State variables
     // - Position of outerCursor
@@ -25,6 +26,38 @@ class MagicMouseCursor {
     this.innerCursorY = 0;
     // - Whether cursor position tracking should be stopped (used for hover)
     this.stopFlag = false;
+  }
+
+  _initHover(hover) {
+    this.hover = hover;
+
+    for (const entry of Object.entries(this.hover)) {
+      const element = entry[1];
+
+      element.outerCursor = element.outerCursor || [];
+      if (element.outerCursor instanceof String) {
+        element.outerCursor = [element.outerCursor];
+      }
+      for (const h of element.outerCursor) {
+        if (!validOuterCursorHovers.includes(h)) {
+          throw new Error(
+            `Invalid hover ${h} for outer cursor: not in ${validOuterCursorHovers}`
+          );
+        }
+      }
+
+      element.innerCursor = element.innerCursor || [];
+      if (element.innerCursor instanceof String) {
+        element.innerCursor = [element.innerCursor];
+      }
+      for (const h of element.innerCursor) {
+        if (!validInnerCursorHovers.includes(h)) {
+          throw new Error(
+            `Invalid hover ${h} for inner cursor: not in ${validInnerCursorHovers}`
+          );
+        }
+      }
+    }
   }
 
   enable() {
@@ -38,8 +71,8 @@ class MagicMouseCursor {
   _createOuterCursor() {
     this.outerCursor = $("<div>");
     this.outerCursor.attr("id", "magic-mouse-outer-cursor");
-    this.outerCursor.width(`${this.defaultOuterWidth}px`);
-    this.outerCursor.height(`${this.defaultOuterHeight}px`);
+    this.outerCursor.width(`${this.defaultOuterCursorWidth}px`);
+    this.outerCursor.height(`${this.defaultOuterCursorHeight}px`);
     this.outerCursor.appendTo($("body"));
   }
 
@@ -55,8 +88,8 @@ class MagicMouseCursor {
       this.innerCursorY = event.clientY;
       setTimeout(() => {
         if (!this.stopFlag) {
-          this.outerCursorX = event.clientX - this.outerWidth / 2;
-          this.outerCursorY = event.clientY - this.outerHeight / 2;
+          this.outerCursorX = event.clientX - this.outerCursorWidth / 2;
+          this.outerCursorY = event.clientY - this.outerCursorHeight / 2;
         }
       }, 50);
     });
@@ -69,8 +102,8 @@ class MagicMouseCursor {
           "transform",
           `matrix(1, 0, 0, 1, ${this.outerCursorX}, ${this.outerCursorY})`
         );
-        this.outerCursor.width(`${this.outerWidth}px`);
-        this.outerCursor.height(`${this.outerHeight}px`);
+        this.outerCursor.width(`${this.outerCursorWidth}px`);
+        this.outerCursor.height(`${this.outerCursorHeight}px`);
       }
       if (this.innerCursor) {
         this.innerCursor.css(
@@ -84,19 +117,19 @@ class MagicMouseCursor {
   }
 
   _enableHoverEffect() {
-    $(this.hoverSelector).each((_, item) => {
-      $(item).bind("mouseenter", () => {
-        this._circleMove_mouseEnterHover($(item));
+    $(Object.keys(this.hover)).each((_, selector) => {
+      $(selector).bind("mouseenter", () => {
+        this._handleMouseEnterHover(selector);
       });
 
-      $(item).bind("mouseleave", () => {
-        $(item).css("transform", "translate3d(0, 0, 0)");
-        this._circleMove_mouseLeaveHover();
+      $(selector).bind("mouseleave", () => {
+        $(selector).css("transform", "translate3d(0, 0, 0)");
+        this._handleMouseLeaveHover();
       });
     });
   }
 
-  _circleMove_mouseEnterHover(item) {
+  _handleMouseEnterHover(selector) {
     this.stopFlag = true;
 
     if (this.outerCursor) {
@@ -107,48 +140,51 @@ class MagicMouseCursor {
 
       this.outerCursor.addClass("is-hover");
 
-      if ($(item).is(this.selectorForHoverOuterCursorSquared)) {
-        this.outerCursor.addClass("cursor-square");
-      }
-      if ($(item).is(this.selectorForHoverOuterCursorDisabled)) {
+      if (this.hover[selector].outerCursor.includes("disable")) {
         this.outerCursor.addClass("cursor-disabled");
+      }
+      if (this.hover[selector].outerCursor.includes("square")) {
+        this.outerCursor.addClass("cursor-squared");
       }
 
       const elementPos = event.currentTarget.getBoundingClientRect();
       this.outerCursorX = elementPos.left;
       this.outerCursorY = elementPos.top;
-      this.outerWidth = elementPos.width;
-      this.outerHeight = elementPos.height;
+      this.outerCursorWidth = elementPos.width;
+      this.outerCursorHeight = elementPos.height;
     }
 
     if (this.innerCursor) {
       this.innerCursor.addClass("is-hover");
 
-      if ($(item).is(this.selectorForHoverInnerCursorDisabled)) {
+      if (this.hover[selector].innerCursor.includes("disable")) {
         this.innerCursor.addClass("cursor-disabled");
+      }
+      if (this.hover[selector].innerCursor.includes("highlight")) {
+        this.innerCursor.addClass("cursor-highlighted");
       }
     }
   }
 
-  _circleMove_mouseLeaveHover() {
+  _handleMouseLeaveHover() {
     this.stopFlag = false;
 
     if (this.outerCursor) {
-      this.outerWidth = this.defaultOuterWidth;
-      this.outerHeight = this.defaultOuterHeight;
+      this.outerCursorWidth = this.defaultOuterCursorWidth;
+      this.outerCursorHeight = this.defaultOuterCursorHeight;
       this.outerCursor.css(
         "transition",
         "transform 0.07s, width 0.3s, height 0.3s, border-radius 0.2s"
       );
       this.outerCursor.removeClass("is-hover");
-      this.outerCursor.removeClass("cursor-square");
       this.outerCursor.removeClass("cursor-disabled");
+      this.outerCursor.removeClass("cursor-squared");
     }
 
     if (this.innerCursor) {
       this.innerCursor.removeClass("is-hover");
-      this.innerCursor.removeClass("cursor-square");
       this.innerCursor.removeClass("cursor-disabled");
+      this.innerCursor.removeClass("cursor-highlighted");
     }
   }
 }

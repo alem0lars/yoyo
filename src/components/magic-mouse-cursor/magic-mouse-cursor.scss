@@ -1,5 +1,8 @@
 @import "../common/bootstrap-variables";
 
+$inner-cursor-size: 5px;
+$outer-cursor-size: 35px;
+
 html,
 html * {
   cursor: none !important;
@@ -9,61 +12,57 @@ html * {
   position: fixed;
   top: 0;
   left: 0;
-  width: 35px;
-  height: 35px;
+  width: $outer-cursor-size;
+  height: $outer-cursor-size;
   z-index: 9999;
 
   border: 1px solid $light;
   border-radius: 50%;
+  box-shadow: 0px 0px 15px -5px $black;
 
   transition: transform 0.07s, width 0.3s, height 0.3s;
 
   pointer-events: none;
 
   &.is-hover {
-    border-color: $primary;
-  }
-
-  &.cursor-square {
-    border-radius: 5%;
   }
 
   &.cursor-disabled {
+    box-shadow: none;
     border: 0px;
   }
 
-  // Blur
-  box-shadow: 0px 0px 15px -5px $black;
+  &.cursor-squared {
+    border-radius: 5%;
+  }
 }
 
 #magic-mouse-inner-cursor {
   position: fixed;
   top: 0;
   left: 0;
-  width: 5px;
-  height: 5px;
+  width: $inner-cursor-size;
+  height: $inner-cursor-size;
 
   background: $light;
-  border-radius: 30%;
+  border-radius: 50%;
 
   transition: background 0.2s, width 0.2s, height 0.2s, box-shadow 0.2s;
 
   pointer-events: none;
 
   &.is-hover {
-    background: $primary;
   }
 
   &.cursor-disabled {
-    background: none;
-    border-radius: unset;
+    background: transparent;
   }
-}
 
-.magic-hover {
-  transition: all 0.2s;
+  &.cursor-highlighted {
+    width: $outer-cursor-size;
+    height: $outer-cursor-size;
 
-  &:hover {
-    cursor: none;
+    background: rgba($light, 0.3);
+    box-shadow: 0px 0px 15px -3px $black;
   }
 }

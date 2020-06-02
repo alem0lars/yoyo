@@ -1,3 +1,6 @@
+block variables
+include ../partials/mainbar
+
 doctype html
 
 html(lang=locals.website.lang)
@@ -12,8 +15,6 @@ html(lang=locals.website.lang)
     //- Set theme color to the default background color
     meta(name="theme-color" content=locals.colorscheme.defaultBackground)
 
-    //- Include javascripts
-    script(type="text/javascript" src="scripts/init.js")
     //- Include stylesheets
     link(rel="stylesheet" href="styles/init.scss")
     //- Include fonts
@@ -23,6 +24,11 @@ html(lang=locals.website.lang)
     block scripts-head
     block styles
 
-  body
-    block content
+  body(data-barba="wrapper")
+    div(data-barba="container" data-barba-namespace=barbaNamespace)
+      div(data-scroll-container)
+        block content
+
+    //- Include javascripts
+    script(type="text/javascript" src="scripts/init.js")
     block scripts-body
