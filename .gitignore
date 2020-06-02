@@ -1,8 +1,8 @@
 # Dependencies
 /node_modules/
 
-# Built version
+# Distribution (built) version of the website
 /dist/
 
-# Cache
+# Cache used by ParcelJS
 /.cache/

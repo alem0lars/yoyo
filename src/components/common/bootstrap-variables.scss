@@ -76,6 +76,10 @@ $link-hover-color: lighten($link-color, 15%);
 
 $border-color: $black;
 
+// TODO $box-shadow-sm: 0 0.125rem 0.25rem rgba($black, 0.075) !default;
+$box-shadow: 0 0 0.6rem 0.3rem rgba($black, 0.35);
+// TODO $box-shadow-lg: 0 1rem 3rem rgba($black, 0.175) !default;
+
 // Typography
 //
 // Font, line-height, and color for body text, headings, and more.
@@ -93,3 +97,9 @@ $text-muted: $gray-200;
 $blockquote-small-color: $gray-200;
 
 $mark-bg: $white;
+
+// Cards
+
+$card-border-color: $black;
+$card-cap-bg: $black;
+$card-bg: $gray-900;

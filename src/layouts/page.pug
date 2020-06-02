@@ -10,7 +10,7 @@ html(lang=locals.website.lang)
     meta(name="description" content=locals.company.description)
 
     meta(charset="utf-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0, maximum-scale=1, minimum-scale=1")
 
     //- Set theme color to the default background color
     meta(name="theme-color" content=locals.colorscheme.defaultBackground)
@@ -27,6 +27,7 @@ html(lang=locals.website.lang)
   body(data-barba="wrapper")
     div(data-barba="container" data-barba-namespace=barbaNamespace)
       div(data-scroll-container)
+        +mainbar
         block content
 
     //- Include javascripts

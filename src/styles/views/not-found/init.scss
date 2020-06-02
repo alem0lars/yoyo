@@ -1,0 +1,25 @@
+[data-barba-namespace="not-found"] {
+  #particles-js {
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+
+    pointer-events: all;
+  }
+
+  .container {
+    pointer-events: none;
+
+    .card {
+      background-color: rgba($card-bg, 0.9);
+
+      a {
+        pointer-events: all;
+      }
+    }
+  }
+}

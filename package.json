@@ -15,6 +15,9 @@
     "rebuild": "npm run clean; npm run build"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-transform-runtime": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
     "favicons": "^6.1.0",
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.0.5",
@@ -23,6 +26,7 @@
     "sass": "^1.26.7"
   },
   "dependencies": {
+    "@babel/runtime": "^7.10.2",
     "@barba/core": "^2.9.7",
     "@barba/prefetch": "^2.1.10",
     "@fortawesome/fontawesome-free": "^5.13.0",
@@ -30,6 +34,8 @@
     "bootstrap": "^4.5.0",
     "jquery": "^3.5.1",
     "locomotive-scroll": "^3.5.4",
-    "popper.js": "^1.16.1"
+    "particles.js": "^2.0.0",
+    "popper.js": "^1.16.1",
+    "typeit": "^7.0.4"
   }
 }

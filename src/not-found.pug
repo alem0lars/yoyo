@@ -1,0 +1,16 @@
+extends layouts/page.pug
+
+block variables
+  - var barbaNamespace = "not-found"
+
+block content
+  div#particles-js
+  .container
+    .row.justify-content-md-center.align-items-center.vh-100
+      .card.shadow.col-lg-8.col-md-10.col-sm-12.p-5.h-50
+        .row.my-5
+          .col.text-center
+            h1#resource-not-found
+        .row.justify-content-md-center.my-5
+          .col-auto
+            a.lead(href="homepage.pug") Back to Home
