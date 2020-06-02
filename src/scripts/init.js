@@ -50,7 +50,7 @@ barba.init({
       once({ next }) {
         scroll.create(next.container);
       },
-      beforeEnter() {
+      beforeEnter({ next }) {
         scroll.recreate(next.container);
       },
       after() {
