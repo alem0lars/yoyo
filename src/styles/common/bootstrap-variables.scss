@@ -1,0 +1,105 @@
+// Color system
+
+$white: #ffffff;
+$gray-100: #ebebeb;
+$gray-200: #cccccc;
+$gray-300: #666666;
+$gray-400: #525252;
+$gray-500: #474747;
+$gray-600: #3d3d3d;
+$gray-700: #333333;
+$gray-800: #262626;
+$gray-900: #141414;
+$black: #0a0a0a;
+
+$blue: #1e88e5;
+$indigo: #6876b6;
+$purple: #91589d;
+$pink: #a14e6b;
+$red: #b04563;
+$orange: #de6e4b;
+$yellow: #fadf7f;
+$green: #97b86d;
+$teal: #92726d; // teal -> brown
+$cyan: #1ba1da;
+
+$colors: ();
+$colors: map-merge(
+  (
+    "blue": $blue,
+    "indigo": $indigo,
+    "purple": $purple,
+    "pink": $pink,
+    "red": $red,
+    "orange": $orange,
+    "yellow": $yellow,
+    "green": $green,
+    "teal": $teal,
+    "cyan": $cyan,
+    "white": $white,
+    "gray": $gray-600,
+    "gray-dark": $gray-800,
+  ),
+  $colors
+);
+
+$primary: $blue;
+$secondary: $teal;
+$success: $green;
+$info: $yellow;
+$warning: $orange;
+$danger: $red;
+$light: $gray-100;
+$dark: $black;
+
+// Customize the light and dark text colors for use in our YIQ color contrast function.
+$yiq-text-dark: $gray-900;
+$yiq-text-light: $white;
+
+// Body
+//
+// Settings for the `<body>` element.
+
+$body-bg: $gray-800;
+$body-color: $gray-100;
+
+// Links
+//
+// Style anchor elements.
+
+$link-color: $pink;
+$link-hover-color: lighten($link-color, 15%);
+
+// Components
+//
+// Define common padding and border radius sizes and more.
+
+$border-color: $black;
+
+// TODO $box-shadow-sm: 0 0.125rem 0.25rem rgba($black, 0.075) !default;
+$box-shadow: 0 0 0.6rem 0.3rem rgba($black, 0.35);
+// TODO $box-shadow-lg: 0 1rem 3rem rgba($black, 0.175) !default;
+
+// Typography
+//
+// Font, line-height, and color for body text, headings, and more.
+
+$font-family-sans-serif: "Open Sans", "Roboto", sans-serif;
+
+$font-weight-lighter: 100;
+$font-weight-light: 200;
+$font-weight-normal: 300;
+$font-weight-bold: 600;
+$font-weight-bolder: 700;
+
+$text-muted: $gray-200;
+
+$blockquote-small-color: $gray-200;
+
+$mark-bg: $white;
+
+// Cards
+
+$card-border-color: $black;
+$card-cap-bg: $black;
+$card-bg: $gray-900;

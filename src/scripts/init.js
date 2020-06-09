@@ -5,56 +5,66 @@ import prefetch from "@barba/prefetch";
 import anime from "animejs";
 import "particles.js";
 
+import { cartesianProductForCSSSelectors as cprodcss } from "./common/utils";
+import { normalButtons, outlineButtons } from "./common/twbs";
 import { NotFoundView } from "./views/not-found/view";
 
 import { MagicMouseCursor } from "../components/magic-mouse-cursor/magic-mouse-cursor";
 import { SmoothScroll } from "../components/smooth-scroll/smooth-scroll";
 import { colorscheme } from "../data/colorscheme";
+import { initialConsoleLog } from "../data/website";
 
 console.log(
-  `
-This is the Cyberloop Official Website.
-
-Following Secure-by-Design principle, the website has been made completely static.
-This also means you can read the entire source of the website, of course we do NOT believe in Security-through-Obscurity.
-The server-side attack surface should be only limited to the webserver exposing the assets, which is btw hosted by Github.
-The client-side attack surface should be none, hence it doesn't accept any user input/parameter.
-
-However, if you find any code vulnerability, contact us at info@cyberloop.it for a €-reward and a job offering :)
-
-%c  🔧 with ❤️ by Cyberloop  `,
+  initialConsoleLog,
   `font-weight: bold; color:${colorscheme.defaultForeground}; background-color:${colorscheme.primary}; padding:5px; border-radius:4px;`
 );
 
-$(document).ready(() => {
-  // Enable Magic Mouse Cursor
-  const mouse = new MagicMouseCursor({
-    hover: {
-      "a,button,input": {
-        outerCursor: ["disable", "square"],
-        innerCursor: ["highlight"],
-      },
-    },
-  });
-  mouse.enable();
-});
+// const mouseCursor = new MagicMouseCursor({
+//   hover: {
+//     [cprodcss(["a", "button", "input"], [":not(.btn)"])]: {
+//       outerCursor: ["disable"],
+//       innerCursor: ["highlight"],
+//     },
+//     [cprodcss(["a", "button", "input"], [".btn"], normalButtons)]: {
+//       outerCursor: ["square"],
+//     },
+//     [cprodcss(["a", "button", "input"], [".btn"], outlineButtons)]: {
+//       outerCursor: ["square", "highlight"],
+//     },
+//   },
+// });
 
 const scroll = new SmoothScroll();
 
+// Enable Magic Mouse Cursor
+// $(document).ready(() => mouseCursor.enable());
+
+// Enable BarbaJS
 barba.use(prefetch);
 barba.init({
+  debug: true,
   views: [new NotFoundView()],
   transitions: [
     {
       name: "default-transition",
       once({ next }) {
+        console.log("once");
         scroll.create(next.container);
       },
+      beforeLeave() {
+        console.log("beforeLeave");
+        scroll.scroll.stop();
+      },
       beforeEnter({ next }) {
+        console.log("beforeEnter");
         scroll.recreate(next.container);
       },
       after() {
+        console.log("after");
         scroll.initialize();
+        scroll.scroll.update();
+        scroll.scroll.start();
+        // mouseCursor.refresh();
       },
       leave(data) {
         return anime({

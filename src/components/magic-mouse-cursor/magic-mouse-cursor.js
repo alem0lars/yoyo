@@ -1,7 +1,7 @@
 import $ from "jquery";
 
 const defaultOuterCursorSize = 30;
-const validOuterCursorHovers = ["disable", "square"];
+const validOuterCursorHovers = ["disable", "square", "adapt", "highlight"];
 const validInnerCursorHovers = ["disable", "highlight"];
 
 class MagicMouseCursor {
@@ -11,7 +11,7 @@ class MagicMouseCursor {
     this.defaultOuterCursorHeight =
       options.defaultOuterCursorHeight || defaultOuterCursorSize;
 
-    this._initHover(options.hover || {});
+    this._initHoverParams(options.hover || {});
 
     // Track the outer cursor width and height
     this.outerCursorWidth = this.defaultOuterCursorWidth;
@@ -26,9 +26,24 @@ class MagicMouseCursor {
     this.innerCursorY = 0;
     // - Whether cursor position tracking should be stopped (used for hover)
     this.stopFlag = false;
+
+    this.hoverElementsHandlers = null;
   }
 
-  _initHover(hover) {
+  enable() {
+    this._createOuterCursor();
+    this._createInnerCursor();
+    this._startToUpdateCursorsPosition();
+    this._startCursorsMovement();
+    this._enableHoverEffect();
+  }
+
+  refresh() {
+    this._disableHoverEffect();
+    this._enableHoverEffect();
+  }
+
+  _initHoverParams(hover) {
     this.hover = hover;
 
     for (const entry of Object.entries(this.hover)) {
@@ -58,14 +73,6 @@ class MagicMouseCursor {
         }
       }
     }
-  }
-
-  enable() {
-    this._createOuterCursor();
-    this._createInnerCursor();
-    this._startToUpdateCursorsPosition();
-    this._startCursorsMovement();
-    this._enableHoverEffect();
   }
 
   _createOuterCursor() {
@@ -117,16 +124,36 @@ class MagicMouseCursor {
   }
 
   _enableHoverEffect() {
-    $(Object.keys(this.hover)).each((_, selector) => {
-      $(selector).bind("mouseenter", () => {
-        this._handleMouseEnterHover(selector);
-      });
+    if (this.hoverElementsHandlers === null) {
+      // 1: Initialize handlers for hover elements
+      this.hoverElementsHandlers = [];
+      for (const selector of Object.keys(this.hover)) {
+        this.hoverElementsHandlers.push({
+          selector,
+          mouseenterHandler: () => this._handleMouseEnterHover(selector),
+          mouseleaveHandler: () => this._handleMouseLeaveHover(selector),
+        });
+      }
 
-      $(selector).bind("mouseleave", () => {
-        $(selector).css("transform", "translate3d(0, 0, 0)");
-        this._handleMouseLeaveHover();
-      });
-    });
+      // 2: Bind handlers for hover elements
+      for (const entry of this.hoverElementsHandlers) {
+        $(entry.selector).bind("mouseenter", entry.mouseenterHandler);
+        $(entry.selector).bind("mouseleave", entry.mouseleaveHandler);
+      }
+    }
+  }
+
+  _disableHoverEffect() {
+    if (this.hoverElementsHandlers !== null) {
+      // 1: Unbind handlers for hover elements
+      for (const entry of this.hoverElementsHandlers) {
+        $(entry.selector).unbind("mouseenter", entry.mouseenterHandler);
+        $(entry.selector).unbind("mouseleave", entry.mouseleaveHandler);
+      }
+
+      // 2: Deinitialize handlers for hover elements
+      this.hoverElementsHandlers = null;
+    }
   }
 
   _handleMouseEnterHover(selector) {
@@ -146,12 +173,19 @@ class MagicMouseCursor {
       if (this.hover[selector].outerCursor.includes("square")) {
         this.outerCursor.addClass("cursor-squared");
       }
-
-      const elementPos = event.currentTarget.getBoundingClientRect();
-      this.outerCursorX = elementPos.left;
-      this.outerCursorY = elementPos.top;
-      this.outerCursorWidth = elementPos.width;
-      this.outerCursorHeight = elementPos.height;
+      if (
+        this.hover[selector].outerCursor.includes("square") || // square implies adapt
+        this.hover[selector].outerCursor.includes("adapt")
+      ) {
+        const elementPos = event.currentTarget.getBoundingClientRect();
+        this.outerCursorX = elementPos.left;
+        this.outerCursorY = elementPos.top;
+        this.outerCursorWidth = elementPos.width;
+        this.outerCursorHeight = elementPos.height;
+      }
+      if (this.hover[selector].outerCursor.includes("highlight")) {
+        this.outerCursor.addClass("cursor-highlighted");
+      }
     }
 
     if (this.innerCursor) {
@@ -166,8 +200,10 @@ class MagicMouseCursor {
     }
   }
 
-  _handleMouseLeaveHover() {
+  _handleMouseLeaveHover(selector) {
     this.stopFlag = false;
+
+    $(selector).css("transform", "translate3d(0, 0, 0)");
 
     if (this.outerCursor) {
       this.outerCursorWidth = this.defaultOuterCursorWidth;
@@ -179,6 +215,7 @@ class MagicMouseCursor {
       this.outerCursor.removeClass("is-hover");
       this.outerCursor.removeClass("cursor-disabled");
       this.outerCursor.removeClass("cursor-squared");
+      this.outerCursor.removeClass("cursor-highlighted");
     }
 
     if (this.innerCursor) {

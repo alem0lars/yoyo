@@ -1,0 +1,7 @@
+@mixin background-image-cover($image-url, $overlay-opacity) {
+  background-image: url($image-url);
+  background-position: "center center";
+  background-size: cover;
+  background-color: rgba(0, 0, 0, $overlay-opacity);
+  background-blend-mode: overlay;
+}

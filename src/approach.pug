@@ -4,11 +4,10 @@ block variables
   - var barbaNamespace = "approach"
 
 block content
-  each v in [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-    div(data-scroll-section)
-      a(href="homepage.pug") Homepage
-      h1(data-scroll) AAAAAAAA
-      p(data-scroll) 👋 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet semper turpis. Vivamus malesuada interdum lectus. Phasellus ullamcorper, libero vel vestibulum suscipit, nisi nisl blandit nunc, ut sollicitudin lacus nibh vel turpis. Duis congue quam vel rhoncus tristique. Vivamus blandit orci vitae dignissim egestas. Vestibulum non neque massa. Vivamus cursus auctor ante eu finibus. Morbi porta ornare metus vel tincidunt. Duis auctor, mi eget efficitur facilisis, tellus diam lobortis magna, vel semper nulla felis ac risus. Etiam quis enim elementum, iaculis enim vitae, vehicula arcu. Quisque luctus iaculis erat. Maecenas sed dui aliquet, blandit erat at, egestas dolor. Fusce et nisi in arcu tincidunt venenatis sit amet placerat ex.
-    div(data-scroll-section)
-      h2(data-scroll data-scroll-speed="0.5") What's up?
-      p(data-scroll data-scroll-speed="0.8") 😬
+  div.approach(data-scroll-section)
+    each v in [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+      a.approach(href="homepage.pug") Homepage
+      h1.approach(data-scroll) AAAAAAAA
+      p.approach(data-scroll) 👋 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet semper turpis. Vivamus malesuada interdum lectus. Phasellus ullamcorper, libero vel vestibulum suscipit, nisi nisl blandit nunc, ut sollicitudin lacus nibh vel turpis. Duis congue quam vel rhoncus tristique. Vivamus blandit orci vitae dignissim egestas. Vestibulum non neque massa. Vivamus cursus auctor ante eu finibus. Morbi porta ornare metus vel tincidunt. Duis auctor, mi eget efficitur facilisis, tellus diam lobortis magna, vel semper nulla felis ac risus. Etiam quis enim elementum, iaculis enim vitae, vehicula arcu. Quisque luctus iaculis erat. Maecenas sed dui aliquet, blandit erat at, egestas dolor. Fusce et nisi in arcu tincidunt venenatis sit amet placerat ex.
+      h2.approach(data-scroll data-scroll-speed="0.5") What's up?
+      p.approach(data-scroll data-scroll-speed="0.8") 😬

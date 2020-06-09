@@ -1,4 +1,10 @@
+@import "../../common/functions";
+
+$bg-image: "../assets/bg-city.jpg";
+
 [data-barba-namespace="not-found"] {
+  @include background-image-cover($bg-image, 0.8);
+
   #particles-js {
     position: fixed;
     z-index: -1;
@@ -11,15 +17,13 @@
     pointer-events: all;
   }
 
-  .container {
+  .not-found-content {
     pointer-events: none;
 
-    .card {
-      background-color: rgba($card-bg, 0.9);
-
-      a {
-        pointer-events: all;
-      }
+    a,
+    button,
+    input {
+      pointer-events: all;
     }
   }
 }

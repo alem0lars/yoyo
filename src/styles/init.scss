@@ -1,11 +1,11 @@
-// Import Twitter Bootstrap library
-@import "../components/common/bootstrap-variables";
+// Import Twitter Bootstrap (overriding variables)
+@import "./common/bootstrap-variables";
 @import "~bootstrap/scss/bootstrap";
-
-// Import Locomotive Scroll library
+// Import Locomotive Scroll styles
 @import "~locomotive-scroll/src/locomotive-scroll";
-
+// Import Magic Mouse Cursor styles
 @import "../components/magic-mouse-cursor/magic-mouse-cursor";
-@import "../components/text-selection/text-selection";
+
+@import "./common/text-selection";
 
 @import "./views/not-found/init";

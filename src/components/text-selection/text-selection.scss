@@ -1,9 +1,0 @@
-// Override default text selection color for WebKit/Blink Browsers
-::selection {
-  background: $primary;
-}
-
-// Override default text selection color for Gecko Browsers
-::-moz-selection {
-  background: $primary;
-}
