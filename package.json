@@ -1,8 +1,8 @@
 {
-  "name": "cyberloop-frontend",
+  "name": "yoyo-frontend",
   "version": "1.0.0",
-  "author": "CYBERLOOP",
-  "description": "CYBERLOOP Official Website",
+  "author": "YoYo",
+  "description": "YoYo Official Website",
   "license": "UNLICENSED",
   "private": true,
   "main": "index.js",

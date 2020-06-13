@@ -1,6 +1,6 @@
 const company = {
-  name: "CYBERLOOP",
-  description: "Cyber Security Advisory Company independent by-design",
+  name: "YoYo",
+  description: "This is YoYo",
 };
 
 module.exports = company;
